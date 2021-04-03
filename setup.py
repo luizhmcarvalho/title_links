@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 from setuptools import setup, find_packages
-from pip.req import parse_requirements
+
+def parse_requirements(filename):
+    """ load requirements from a pip requirements file """
+    lineiter = (line.strip() for line in open(filename))
+    return [line for line in lineiter if line and not line.startswith("#")]
 
 version = '0.0.1'
 requirements = parse_requirements("requirements.txt", session="")
@@ -14,6 +18,5 @@ setup(
 	packages=find_packages(),
 	zip_safe=False,
 	include_package_data=True,
-	install_requires=[str(ir.req) for ir in requirements],
-	dependency_links=[str(ir._link) for ir in requirements if ir._link]
+	install_requires=[str(ir) for ir in requirements]
 )
