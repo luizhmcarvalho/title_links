@@ -133,7 +133,7 @@ frappe.ui.form.ControlLink = frappe.ui.form.ControlLink.extend({
 			},
 
 			item: function (item, input) {
-				d = this.get_item(item.value);
+				var d = this.get_item(item.value);
 				if (!d.label) {
 					if (this.frm && this.frm.doc || cur_page.page.id.toLowerCase().indexOf("report") !== -1) {
 						d.label = me.format_for_input(d.value) || d.value;
@@ -416,7 +416,7 @@ frappe.ui.form.GridRow = frappe.ui.form.GridRow.extend({
 });
 */
 
-frappe.views.ListRenderer = frappe.views.ListRenderer.extend({
+frappe.views.ListRenderer={
 	// returns html for a data item,
 	// usually based on a template
 	get_item_html: function (data) {
@@ -456,4 +456,4 @@ frappe.views.ListRenderer = frappe.views.ListRenderer.extend({
 		}
 		return '';
 	}
-})
+}

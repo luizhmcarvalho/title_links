@@ -16,7 +16,7 @@ def search_link(doctype, txt, query=None, filters=None, page_len=20, searchfield
 
     search_widget(doctype, txt, query, searchfield=searchfield, page_len=page_len, filters=filters)
     frappe.response['results'] = build_for_autosuggest(frappe.response['values'])
-    print frappe.response['results']
+    print (frappe.response['results'])
     del frappe.response['values']
 
 
@@ -33,7 +33,7 @@ def search_title(doctype, name):
 def search_widget(doctype, txt, query=None, searchfield=None, start=0,
                   page_len=10, filters=None, as_dict=False):
 
-    if isinstance(filters, basestring):
+    if isinstance(filters, str):
         import json
         filters = json.loads(filters)
 
@@ -77,7 +77,7 @@ def search_widget(doctype, txt, query=None, searchfield=None, start=0,
             else:
                 title_field = None
 
-            print "title_field = {0}".format(title_field)
+            print ("title_field = {0}".format(title_field))
             # build from doctype
             if txt:
                 search_fields = ["name"]
@@ -109,8 +109,9 @@ def search_widget(doctype, txt, query=None, searchfield=None, start=0,
 
             # find relevance as location of search term from the beginning of string
             # `name`. used for sorting results.
+          
             fields.append("""locate("{_txt}", `tab{doctype}`.`name`) as `_relevance`""".format(
-                _txt=frappe.db.escape((txt or "").replace("%", "")), doctype=frappe.db.escape(doctype)))
+                _txt=frappe.db.escape((txt or "").replace("%", "")), doctype=frappe.db.escape(doctype).replace("'","")))
 
             # In order_by, `idx` gets second priority, because it stores link count
             from frappe.model.db_query import get_order_by
@@ -141,7 +142,7 @@ def get_std_fields_list(meta, key):
 def build_for_autosuggest(res):
     results = []
     for r in res:
-        print r
+        print (r)
         out = {"value": r[0], "description": ", ".join(unique(cstr(d) for d in r if d)[0:])}
         results.append(out)
 
