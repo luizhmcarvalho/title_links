@@ -7,7 +7,7 @@ def parse_requirements(filename):
     return [line for line in lineiter if line and not line.startswith("#")]
 
 version = '0.0.1'
-requirements = parse_requirements("requirements.txt", session="")
+requirements = parse_requirements("requirements.txt")
 
 setup(
 	name='title_links',
